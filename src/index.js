@@ -1,12 +1,12 @@
 const sectors = [
-  { color: "#FFBC03", text: "#333333", label: "Sweets" },
-  { color: "#FF5A10", text: "#333333", label: "Prize draw" },
-  { color: "#FFBC03", text: "#333333", label: "Sweets" },
-  { color: "#FF5A10", text: "#333333", label: "Prize draw" },
-  { color: "#FFBC03", text: "#333333", label: "Sweets + Prize draw" },
-  { color: "#FF5A10", text: "#333333", label: "You lose" },
-  { color: "#FFBC03", text: "#333333", label: "Prize draw" },
-  { color: "#FF5A10", text: "#333333", label: "Sweets" },
+  { color: "#FF5A10", text: "#333333", label: "S" },
+  { color: "#FFBC03", text: "#333333", label: "B" },
+  { color: "#FF5A10", text: "#333333", label: "R" },
+  { color: "#FFBC03", text: "#333333", label: "I" },
+  { color: "#FF5A10", text: "#333333", label: "N" },
+  { color: "#FFBC03", text: "#333333", label: "T" },
+  { color: "#FF5A10", text: "#333333", label: "H" },
+  { color: "#FFBC03", text: "#333333", label: "A" },
 ];
 
 const events = {
@@ -24,6 +24,7 @@ const events = {
   },
 };
 
+const babyName = [];
 const rand = (m, M) => Math.random() * (M - m) + m;
 const tot = sectors.length;
 const spinEl = document.querySelector("#spin");
@@ -34,7 +35,7 @@ const PI = Math.PI;
 const TAU = 2 * PI;
 const arc = TAU / sectors.length;
 
-const friction = 0.991; // 0.995=soft, 0.99=mid, 0.98=hard
+const friction = 0.98; // 0.995=soft, 0.99=mid, 0.98=hard
 let angVel = 0; // Angular velocity
 let ang = 0; // Angle in radians
 
@@ -78,8 +79,11 @@ function rotate() {
 function frame() {
   // Fire an event after the wheel has stopped spinning
   if (!angVel && spinButtonClicked) {
+    console.log(angVel)
     const finalSector = sectors[getIndex()];
     events.fire("spinEnd", finalSector);
+    babyName.push(finalSector.label);
+    document.getElementById("babyName").innerHTML = babyName.join(' ');
     spinButtonClicked = false; // reset the flag
     return;
   }
